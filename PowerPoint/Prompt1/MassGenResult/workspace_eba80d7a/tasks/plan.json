@@ -1,0 +1,119 @@
+{
+  "agent_id": "orchestrator:agent_c",
+  "tasks": [
+    {
+      "id": "create_evolving_skill",
+      "description": "Create tasks/evolving_skill/SKILL.md with your workflow plan. See the Evolving Skills section in system prompt for format.",
+      "status": "verified",
+      "priority": "high",
+      "created_at": "2026-02-23T21:43:48.337029",
+      "completed_at": null,
+      "verified_at": "2026-02-23T21:44:32.276445",
+      "dependencies": [],
+      "metadata": {
+        "verification_notes": "Created tasks/evolving_skill/SKILL.md with full workflow and planned scripts."
+      }
+    },
+    {
+      "id": "prep_memory",
+      "description": "Check long-term memories for relevant context from previous work. Consider patterns, decisions, or discoveries that could inform your approach to this task.",
+      "status": "verified",
+      "priority": "high",
+      "created_at": "2026-02-23T21:43:48.337044",
+      "completed_at": null,
+      "verified_at": "2026-02-23T21:44:32.279755",
+      "dependencies": [],
+      "metadata": {
+        "verification_notes": "No existing memories present/needed for this task."
+      }
+    },
+    {
+      "id": "plan_content",
+      "description": "Design 8-slide Quarterly Earnings deck structure (titles, required charts, key takeaway placement, speaker notes requirements)",
+      "status": "verified",
+      "priority": "high",
+      "created_at": "2026-02-23T21:43:48.337050",
+      "completed_at": null,
+      "verified_at": "2026-02-23T21:44:32.281679",
+      "dependencies": [],
+      "metadata": {
+        "verification": "Slide outline covers 8 slides, includes Slide 3 bar chart, Slide 5 pie chart, and key takeaway textbox on every slide; speaker notes text finalized",
+        "verification_method": "Review outline in tasks/notes.md for completeness",
+        "verification_notes": "Wrote 8-slide outline and notes requirements in tasks/notes.md."
+      }
+    },
+    {
+      "id": "write_script",
+      "description": "Implement complete python-pptx script with robust error handling to generate Q4_Earnings.pptx per requirements",
+      "status": "verified",
+      "priority": "high",
+      "created_at": "2026-02-23T21:43:48.337054",
+      "completed_at": null,
+      "verified_at": "2026-02-23T21:46:39.681200",
+      "dependencies": [
+        "plan_content"
+      ],
+      "metadata": {
+        "verification": "Script runs without errors and saves Q4_Earnings.pptx",
+        "verification_method": "python generate_q4_earnings_deck.py && ls -l Q4_Earnings.pptx",
+        "verification_notes": "Implemented generate_q4_earnings_deck.py; ran it successfully to produce Q4_Earnings.pptx."
+      }
+    },
+    {
+      "id": "verify_deck",
+      "description": "Programmatically verify generated deck: 8 slides, key takeaway on each slide, Slide 3 has bar chart with Q1-Q4 revenues, Slide 5 has pie chart for churn breakdown, speaker notes present and address Q4 revenue dip",
+      "status": "verified",
+      "priority": "high",
+      "created_at": "2026-02-23T21:43:48.337059",
+      "completed_at": null,
+      "verified_at": "2026-02-23T21:46:39.685132",
+      "dependencies": [
+        "write_script"
+      ],
+      "metadata": {
+        "verification": "Verification script prints PASS for all checks",
+        "verification_method": "python verify_deck.py (or embedded verification) returns exit code 0",
+        "verification_notes": "Created and ran verify_deck.py; PASS confirms slide count, charts, key takeaway, and speaker notes requirements."
+      }
+    },
+    {
+      "id": "docs",
+      "description": "Write internal evolving skill and changedoc with decisions and learnings",
+      "status": "pending",
+      "priority": "medium",
+      "created_at": "2026-02-23T21:43:48.337062",
+      "completed_at": null,
+      "verified_at": null,
+      "dependencies": [],
+      "metadata": {
+        "verification": "tasks/evolving_skill/SKILL.md and tasks/changedoc.md exist and reflect actual implementation",
+        "verification_method": "ls -R tasks/evolving_skill && sed -n '1,120p' tasks/changedoc.md"
+      }
+    },
+    {
+      "id": "update_evolving_skill",
+      "description": "Update tasks/evolving_skill/SKILL.md with learnings from this session:\n1. Refine ## Workflow based on what actually worked\n2. Update ## Tools to Create - ensure scripts exist in scripts/ directory\n3. Add ## Learnings section with:\n   - What worked well\n   - What didn't work or needed adjustment\n   - Tips for future use\n4. Update ## Dependencies if you discovered better approaches\n\nThis makes the skill reusable for similar future tasks.",
+      "status": "pending",
+      "priority": "medium",
+      "created_at": "2026-02-23T21:43:48.337066",
+      "completed_at": null,
+      "verified_at": null,
+      "dependencies": [],
+      "metadata": {}
+    },
+    {
+      "id": "save_memories",
+      "description": "Document decisions to optimize future work: skill/tool effectiveness, approach patterns, lessons learned, user preferences",
+      "status": "pending",
+      "priority": "medium",
+      "created_at": "2026-02-23T21:43:48.337070",
+      "completed_at": null,
+      "verified_at": null,
+      "dependencies": [],
+      "metadata": {}
+    }
+  ],
+  "created_at": "2026-02-23T21:43:48.336981",
+  "updated_at": "2026-02-23T21:46:39.685130",
+  "subagents": {}
+}

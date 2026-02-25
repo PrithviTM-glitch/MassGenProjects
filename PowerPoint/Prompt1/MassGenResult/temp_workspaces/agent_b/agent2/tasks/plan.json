@@ -1,0 +1,94 @@
+{
+  "agent_id": "orchestrator:agent_b",
+  "tasks": [
+    {
+      "id": "create_evolving_skill",
+      "description": "Create tasks/evolving_skill/SKILL.md with your workflow plan. See the Evolving Skills section in system prompt for format.",
+      "status": "pending",
+      "priority": "high",
+      "created_at": "2026-02-23T21:43:52.727770",
+      "completed_at": null,
+      "verified_at": null,
+      "dependencies": [],
+      "metadata": {}
+    },
+    {
+      "id": "prep_memory",
+      "description": "Check long-term memories for relevant context from previous work. Consider patterns, decisions, or discoveries that could inform your approach to this task.",
+      "status": "pending",
+      "priority": "high",
+      "created_at": "2026-02-23T21:43:52.727835",
+      "completed_at": null,
+      "verified_at": null,
+      "dependencies": [],
+      "metadata": {}
+    },
+    {
+      "id": "create_script",
+      "description": "Create the main generation script (scripts/generate_earnings_deck.py) with robust error handling and the specific data requirements.",
+      "status": "verified",
+      "priority": "high",
+      "created_at": "2026-02-23T21:43:52.727854",
+      "completed_at": null,
+      "verified_at": "2026-02-23T21:44:22.645887",
+      "dependencies": [],
+      "metadata": {
+        "verification": "Script is written to the filesystem and contains the required logic.",
+        "verification_method": "cat scripts/generate_earnings_deck.py"
+      }
+    },
+    {
+      "id": "run_script",
+      "description": "Execute the script to generate Q4_Earnings.pptx.",
+      "status": "verified",
+      "priority": "high",
+      "created_at": "2026-02-23T21:43:52.727866",
+      "completed_at": null,
+      "verified_at": "2026-02-23T21:44:26.623566",
+      "dependencies": [],
+      "metadata": {
+        "verification": "File Q4_Earnings.pptx exists in the workspace.",
+        "verification_method": "ls -l Q4_Earnings.pptx"
+      }
+    },
+    {
+      "id": "verify_pptx",
+      "description": "Verify the content of the generated PPTX (slides count, chart presence, takeaways, speaker notes).",
+      "status": "verified",
+      "priority": "medium",
+      "created_at": "2026-02-23T21:43:52.727877",
+      "completed_at": null,
+      "verified_at": "2026-02-23T21:44:29.001113",
+      "dependencies": [],
+      "metadata": {
+        "verification": "8 slides present, charts on slides 3 and 5, takeaways on all slides, notes on slide 3.",
+        "verification_method": "Run a verification script using python-pptx to inspect the structure."
+      }
+    },
+    {
+      "id": "update_evolving_skill",
+      "description": "Update tasks/evolving_skill/SKILL.md with learnings from this session:\n1. Refine ## Workflow based on what actually worked\n2. Update ## Tools to Create - ensure scripts exist in scripts/ directory\n3. Add ## Learnings section with:\n   - What worked well\n   - What didn't work or needed adjustment\n   - Tips for future use\n4. Update ## Dependencies if you discovered better approaches\n\nThis makes the skill reusable for similar future tasks.",
+      "status": "pending",
+      "priority": "medium",
+      "created_at": "2026-02-23T21:43:52.727889",
+      "completed_at": null,
+      "verified_at": null,
+      "dependencies": [],
+      "metadata": {}
+    },
+    {
+      "id": "save_memories",
+      "description": "Document decisions to optimize future work: skill/tool effectiveness, approach patterns, lessons learned, user preferences",
+      "status": "pending",
+      "priority": "medium",
+      "created_at": "2026-02-23T21:43:52.727900",
+      "completed_at": null,
+      "verified_at": null,
+      "dependencies": [],
+      "metadata": {}
+    }
+  ],
+  "created_at": "2026-02-23T21:43:52.727581",
+  "updated_at": "2026-02-23T21:44:29.001110",
+  "subagents": {}
+}

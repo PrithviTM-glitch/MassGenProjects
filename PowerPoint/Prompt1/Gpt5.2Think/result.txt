@@ -1,0 +1,255 @@
+Here is a complete, production-ready, error-handled Python script using **python-pptx** that generates an 8-slide SaaS Quarterly Earnings deck named **Q4_Earnings.pptx**, including:
+
+* ✅ Native PowerPoint **bar chart** (Slide 3)
+* ✅ Native PowerPoint **pie chart** (Slide 5)
+* ✅ “Key Takeaway” textbox on every slide
+* ✅ Exact CFO speaker notes addressing the Q4 revenue dip
+* ✅ Robust error handling
+
+---
+
+```python
+#!/usr/bin/env python3
+"""
+Generate Q4 SaaS Quarterly Earnings Deck
+File: Q4_Earnings.pptx
+"""
+
+import sys
+import os
+import traceback
+from pptx import Presentation
+from pptx.util import Inches, Pt
+from pptx.enum.text import PP_ALIGN
+from pptx.dml.color import RGBColor
+from pptx.chart.data import ChartData
+from pptx.enum.chart import XL_CHART_TYPE
+from pptx.enum.shapes import MSO_AUTO_SHAPE_TYPE
+from pptx.enum.dml import MSO_THEME_COLOR
+
+
+def add_key_takeaway(slide, text):
+    """Add standardized Key Takeaway text box to a slide."""
+    try:
+        left = Inches(0.5)
+        top = Inches(6.0)
+        width = Inches(9)
+        height = Inches(0.6)
+
+        textbox = slide.shapes.add_textbox(left, top, width, height)
+        tf = textbox.text_frame
+        tf.clear()
+        p = tf.paragraphs[0]
+        p.text = f"Key Takeaway: {text}"
+        p.font.size = Pt(14)
+        p.font.bold = True
+        p.font.italic = True
+        return textbox
+    except Exception as e:
+        raise RuntimeError(f"Failed to add Key Takeaway textbox: {e}")
+
+
+def add_cfo_notes(slide, notes_text):
+    """Add CFO speaker notes to slide."""
+    try:
+        notes_slide = slide.notes_slide
+        text_frame = notes_slide.notes_text_frame
+        text_frame.clear()
+        text_frame.text = notes_text
+    except Exception as e:
+        raise RuntimeError(f"Failed to add speaker notes: {e}")
+
+
+def create_presentation():
+    try:
+        # Raw Data
+        revenue_data = {
+            "Q1": 2.4,
+            "Q2": 2.8,
+            "Q3": 3.1,
+            "Q4": 2.9
+        }
+        churn_increase_q4 = 4  # percent increase
+
+        prs = Presentation()
+
+        # ---------------- Slide 1: Title ----------------
+        slide_layout = prs.slide_layouts[0]
+        slide1 = prs.slides.add_slide(slide_layout)
+        slide1.shapes.title.text = "Q4 Earnings Report"
+        subtitle = slide1.placeholders[1]
+        subtitle.text = "SaaS Company | Quarterly Financial Overview"
+
+        add_key_takeaway(slide1, "Q4 revenue dipped slightly, with churn increase impacting growth.")
+        add_cfo_notes(
+            slide1,
+            "As CFO, I want to address the Q4 revenue dip directly. "
+            "While revenue reached $2.9M, slightly below Q3’s $3.1M, "
+            "this was primarily driven by a 4% increase in customer churn. "
+            "We are actively implementing retention strategies to stabilize growth moving forward."
+        )
+
+        # ---------------- Slide 2: Revenue Summary ----------------
+        slide_layout = prs.slide_layouts[1]
+        slide2 = prs.slides.add_slide(slide_layout)
+        slide2.shapes.title.text = "Quarterly Revenue Summary"
+
+        content = slide2.placeholders[1]
+        content.text = (
+            f"Q1: ${revenue_data['Q1']}M\n"
+            f"Q2: ${revenue_data['Q2']}M\n"
+            f"Q3: ${revenue_data['Q3']}M\n"
+            f"Q4: ${revenue_data['Q4']}M"
+        )
+
+        add_key_takeaway(slide2, "Revenue growth was strong through Q3 before a modest Q4 pullback.")
+        add_cfo_notes(
+            slide2,
+            "Revenue growth was consistent from Q1 through Q3. "
+            "The Q4 dip reflects churn-related revenue pressure rather than demand weakness."
+        )
+
+        # ---------------- Slide 3: Revenue Bar Chart ----------------
+        slide_layout = prs.slide_layouts[5]
+        slide3 = prs.slides.add_slide(slide_layout)
+        slide3.shapes.title.text = "Quarterly Revenue Comparison"
+
+        chart_data = ChartData()
+        chart_data.categories = list(revenue_data.keys())
+        chart_data.add_series("Revenue (Millions USD)", tuple(revenue_data.values()))
+
+        x, y, cx, cy = Inches(1), Inches(1.5), Inches(8), Inches(4)
+        chart = slide3.shapes.add_chart(
+            XL_CHART_TYPE.COLUMN_CLUSTERED, x, y, cx, cy, chart_data
+        ).chart
+
+        chart.has_legend = True
+        chart.value_axis.has_major_gridlines = True
+
+        add_key_takeaway(slide3, "Q4 revenue declined from Q3 peak due to increased churn.")
+        add_cfo_notes(
+            slide3,
+            "The bar chart illustrates strong growth through Q3, followed by a modest decline in Q4. "
+            "This 6.5% quarter-over-quarter dip is directly correlated with increased churn."
+        )
+
+        # ---------------- Slide 4: Churn Overview ----------------
+        slide_layout = prs.slide_layouts[1]
+        slide4 = prs.slides.add_slide(slide_layout)
+        slide4.shapes.title.text = "Customer Churn Overview"
+
+        slide4.placeholders[1].text = (
+            f"Customer churn increased by {churn_increase_q4}% in Q4.\n"
+            "Primary drivers: contract expirations and pricing adjustments."
+        )
+
+        add_key_takeaway(slide4, "Retention strategy required to reverse churn trend.")
+        add_cfo_notes(
+            slide4,
+            "Churn increased by 4% in Q4, impacting recurring revenue streams. "
+            "We are reviewing renewal incentives and pricing tiers."
+        )
+
+        # ---------------- Slide 5: Churn Pie Chart ----------------
+        slide_layout = prs.slide_layouts[5]
+        slide5 = prs.slides.add_slide(slide_layout)
+        slide5.shapes.title.text = "Q4 Churn Breakdown"
+
+        pie_data = ChartData()
+        pie_data.categories = ["Existing Stable Customers", "Increased Churn (Q4 +4%)"]
+        pie_data.add_series("Churn Distribution", (96, 4))
+
+        chart = slide5.shapes.add_chart(
+            XL_CHART_TYPE.PIE, Inches(2), Inches(1.5), Inches(6), Inches(4), pie_data
+        ).chart
+
+        chart.has_legend = True
+
+        add_key_takeaway(slide5, "Small churn percentage had measurable revenue impact.")
+        add_cfo_notes(
+            slide5,
+            "Although churn represents only 4% of customers, "
+            "its impact on ARR is amplified due to concentration in higher-value accounts."
+        )
+
+        # ---------------- Slide 6: Financial Impact ----------------
+        slide_layout = prs.slide_layouts[1]
+        slide6 = prs.slides.add_slide(slide_layout)
+        slide6.shapes.title.text = "Financial Impact Analysis"
+
+        slide6.placeholders[1].text = (
+            "• Q4 revenue: $2.9M\n"
+            "• Down from Q3: $3.1M\n"
+            "• Churn increase: 4%"
+        )
+
+        add_key_takeaway(slide6, "Revenue sensitivity to churn underscores retention priority.")
+        add_cfo_notes(
+            slide6,
+            "The $0.2M revenue decline highlights sensitivity to churn in subscription models."
+        )
+
+        # ---------------- Slide 7: Strategic Response ----------------
+        slide_layout = prs.slide_layouts[1]
+        slide7 = prs.slides.add_slide(slide_layout)
+        slide7.shapes.title.text = "Strategic Response Plan"
+
+        slide7.placeholders[1].text = (
+            "• Enhanced customer success outreach\n"
+            "• Contract renewal incentives\n"
+            "• Product value reinforcement"
+        )
+
+        add_key_takeaway(slide7, "Focused retention initiatives to stabilize Q1 outlook.")
+        add_cfo_notes(
+            slide7,
+            "We are implementing proactive engagement strategies to restore growth trajectory."
+        )
+
+        # ---------------- Slide 8: Closing ----------------
+        slide_layout = prs.slide_layouts[1]
+        slide8 = prs.slides.add_slide(slide_layout)
+        slide8.shapes.title.text = "Conclusion"
+
+        slide8.placeholders[1].text = (
+            "Strong fundamentals remain intact.\n"
+            "Q4 challenges are manageable and being addressed."
+        )
+
+        add_key_takeaway(slide8, "Short-term dip, long-term growth strategy intact.")
+        add_cfo_notes(
+            slide8,
+            "While Q4 reflects a temporary setback, our SaaS fundamentals remain strong. "
+            "Retention and operational adjustments will support renewed growth."
+        )
+
+        # Save Presentation
+        output_file = "Q4_Earnings.pptx"
+        prs.save(output_file)
+
+        if not os.path.exists(output_file):
+            raise FileNotFoundError("Presentation file was not created successfully.")
+
+        print(f"Presentation successfully created: {output_file}")
+
+    except Exception as main_error:
+        print("An error occurred while generating the presentation.")
+        print(str(main_error))
+        traceback.print_exc()
+        sys.exit(1)
+
+
+if __name__ == "__main__":
+    create_presentation()
+```
+
+---
+
+If you'd like, I can also provide:
+
+* A version styled for board-level presentation (cleaner layouts, better spacing)
+* A version with EBITDA / ARR / CAC metrics added
+* A version formatted specifically for investor pitch use
+* A version that auto-calculates QoQ growth percentages dynamically
+
+Just tell me which direction you want.
