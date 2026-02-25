@@ -1,0 +1,58 @@
+{
+  "agent_id": "orchestrator:agent_c",
+  "tasks": [
+    {
+      "id": "75fca408-f5aa-4f95-8b47-8463f9b653ef",
+      "description": "Define slide-by-slide narrative (maze metaphor) ensuring superposition + entanglement introduced by slide 6 and no bullet points.",
+      "status": "verified",
+      "priority": "high",
+      "created_at": "2026-02-24T18:02:33.672347",
+      "completed_at": "2026-02-24T18:02:57.596805",
+      "verified_at": "2026-02-24T18:03:11.255293",
+      "dependencies": [],
+      "metadata": {
+        "verification": "A written 10-slide outline exists in tasks/notes.md and matches constraints.",
+        "verification_method": "Review tasks/notes.md outline for slide ordering and required concepts.",
+        "completion_notes": "Added a 10-slide outline to tasks/notes.md with superposition on slide 5 and entanglement on slide 6, maintaining the maze metaphor and avoiding bullets.",
+        "verification_notes": "Verified tasks/notes.md contains a 10-slide outline with superposition on slide 5 and entanglement on slide 6; no bullets required."
+      }
+    },
+    {
+      "id": "add14248-bc8d-4eca-8263-7615d1ceb85c",
+      "description": "Implement PPTX generator script (python-pptx + maze background rendering) producing a 10-slide deck with dynamic text-box layouts and no bullets.",
+      "status": "verified",
+      "priority": "high",
+      "created_at": "2026-02-24T18:02:37.950989",
+      "completed_at": null,
+      "verified_at": "2026-02-24T18:13:03.157287",
+      "dependencies": [
+        "75fca408-f5aa-4f95-8b47-8463f9b653ef"
+      ],
+      "metadata": {
+        "verification": "deliverable/Quantum_Computing_Maze_Metaphor.pptx exists and opens; slides include maze visuals on every slide; no bullet formatting used.",
+        "verification_method": "Run generator; then run python verification that counts slides and scans paragraphs for bullet flags.",
+        "verification_notes": "Generated deliverable/Quantum_Computing_Maze_Metaphor.pptx (10 slides) with maze background assets in deliverable/assets/. Verified by running python utils/verify_quantum_maze_pptx.py which confirms slide count=10 and no bullet formatting."
+      }
+    },
+    {
+      "id": "e900a2a5-d757-4211-a165-726d381ad089",
+      "description": "Add and verify standout hyperlinked 'Quiz' buttons on slides 4 and 8 that navigate to the Quiz slide (slide 10).",
+      "status": "verified",
+      "priority": "high",
+      "created_at": "2026-02-24T18:02:42.776785",
+      "completed_at": null,
+      "verified_at": "2026-02-24T18:13:09.440332",
+      "dependencies": [
+        "add14248-bc8d-4eca-8263-7615d1ceb85c"
+      ],
+      "metadata": {
+        "verification": "Slides 4 and 8 each contain a 'Quiz' button shape with an internal hyperlink to slide 10.",
+        "verification_method": "Run a python-pptx inspection script that locates shapes labeled 'Quiz' on slides 4 and 8 and confirms click_action target is slide 10.",
+        "verification_notes": "Verified Quiz buttons exist on slides 4 and 8 and each has an internal hyperlink to slide 10 using python utils/verify_quantum_maze_pptx.py (PASS)."
+      }
+    }
+  ],
+  "created_at": "2026-02-24T18:02:33.672077",
+  "updated_at": "2026-02-24T18:13:09.440330",
+  "subagents": {}
+}

@@ -1,0 +1,19 @@
+0 verbose cli /usr/bin/node /usr/bin/npm
+1 info using npm@10.8.2
+2 info using node@v20.20.0
+3 silly config load:file:/usr/lib/node_modules/npm/npmrc
+4 silly config load:file:/Users/tmprithvi/Code/workspace_6fc3aa5f/.npmrc
+5 silly config load:file:/home/massgen/.npmrc
+6 silly config load:file:/usr/etc/npmrc
+7 verbose title npm list pptxgenjs
+8 verbose argv "list" "pptxgenjs"
+9 verbose logfile logs-max:10 dir:/Users/tmprithvi/Code/workspace_6fc3aa5f/.cache/npm/_logs/2026-02-25T00_02_54_032Z-
+10 verbose logfile /Users/tmprithvi/Code/workspace_6fc3aa5f/.cache/npm/_logs/2026-02-25T00_02_54_032Z-debug-0.log
+11 silly packumentCache heap:2197815296 maxSize:549453824 maxEntrySize:274726912
+12 silly logfile done cleaning log files
+13 verbose cwd /Users/tmprithvi/Code/workspace_6fc3aa5f
+14 verbose os Linux 6.12.67-linuxkit
+15 verbose node v20.20.0
+16 verbose npm  v10.8.2
+17 verbose exit 1
+18 verbose code 1
