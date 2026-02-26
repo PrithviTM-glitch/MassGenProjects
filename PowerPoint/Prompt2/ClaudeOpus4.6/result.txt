@@ -1,0 +1,6 @@
+I'll start by reading the PPTX skill documentation to ensure high-quality output.Now let me create the presentation:Everything's installed. Now I'll create the presentation script:Now let me do QA — convert to images and visually inspect:The slides look great overall. I notice one issue on slide 10: the body text overlaps slightly with the takeaway cards below. Let me fix that by moving the body text up and the cards down slightly.That looks clean now — no overlapping. Let me copy the final file to the output directory.Here's your 10-slide Quantum Computing presentation! It uses the **maze metaphor** throughout, with a deep purple/teal quantum color palette. Key features:
+
+- **No bullet points** — all content uses prose in dynamic layouts (two-column comparisons, three-panel grids, 2×2 card layouts, top-heavy titles with side cards)
+- **Progressive complexity**: basics (slides 1–3) → qubits & superposition (4–5) → entanglement (6) → gates & algorithms (7–8) → applications & conclusion (9–10)
+- **Interactive Quiz buttons** on slides 4 and 8 — coral-colored, hyperlinked, and visually prominent (you can update the URLs to point to your actual quiz)
+- Decorative maze overlay patterns, icons, and varied slide backgrounds throughout
